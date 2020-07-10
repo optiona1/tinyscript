@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 public class PeekIterator<T> implements Iterator<T> {
     private Iterator<T> it;
     private LinkedList<T> queueCache = new LinkedList<>();
-    private LinkedList<T> statckPutBacks = new LinkedList<>();
+    private LinkedList<T> stackPutBacks = new LinkedList<>();
     private final static int CACHE_SIZE = 10;
     private T _endToken;
 
@@ -17,10 +17,10 @@ public class PeekIterator<T> implements Iterator<T> {
     }
 
     public T peek() {
-        if(this.statckPutBacks.size() > 0) {
-            return this.statckPutBacks.getFirst();
+        if (this.stackPutBacks.size() > 0) {
+            return this.stackPutBacks.getFirst();
         }
-        if(!it.hasNext()) {
+        if (!it.hasNext()) {
             return _endToken;
         }
         T val = next();
@@ -29,23 +29,24 @@ public class PeekIterator<T> implements Iterator<T> {
     }
 
     public void putBack() {
-        if(this.queueCache.size() > 0) {
-        
-            this.statckPutBacks.push(this.queueCache.pollLast());
+        if (this.queueCache.size() > 0) {
+
+            this.stackPutBacks.push(this.queueCache.pollLast());
         }
     }
 
     @Override
     public boolean hasNext() {
-        return _endToken != null || this.statckPutBacks.size() > 0 || it.hasNext()   ;
+        return _endToken != null || this.stackPutBacks.size() > 0 || it.hasNext();
     }
+
     @Override
     public T next() {
         T val = null;
-        if(this.statckPutBacks.size() > 0) {
-            val = this.statckPutBacks.pop();
+        if (this.stackPutBacks.size() > 0) {
+            val = this.stackPutBacks.pop();
         } else {
-            if(!this.it.hasNext()) {
+            if (!this.it.hasNext()) {
                 T tmp = _endToken;
                 _endToken = null;
                 return tmp;
@@ -53,7 +54,7 @@ public class PeekIterator<T> implements Iterator<T> {
             val = it.next();
         }
 
-        while(queueCache.size() > CACHE_SIZE - 1) {
+        while (queueCache.size() > CACHE_SIZE - 1) {
             queueCache.poll();
         }
         queueCache.add(val);

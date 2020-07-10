@@ -6,8 +6,9 @@ public class Token {
 
     public Token(TokenType type, String value) {
         this._type = type;
-        this._value = value
+        this._value = value;
     }
+
     public TokenType getType() {
         return _type;
     }
@@ -23,8 +24,8 @@ public class Token {
 
     public boolean isScalar() {
         return _type == TokenType.INTEGER ||
-            _type == TokenType.STRING ||
-            _type == TokenType.FLOAT ||
-            _type == TokenType.BOOLEAN;
+                _type == TokenType.STRING ||
+                _type == TokenType.FLOAT ||
+                _type == TokenType.BOOLEAN;
     }
 }
