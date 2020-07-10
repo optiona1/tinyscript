@@ -22,7 +22,7 @@ public class Token {
     }
 
     public boolean isScalar() {
-        return _type == TokenType.Integer ||
+        return _type == TokenType.INTEGER ||
             _type == TokenType.STRING ||
             _type == TokenType.FLOAT ||
             _type == TokenType.BOOLEAN;
